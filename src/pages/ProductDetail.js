@@ -390,7 +390,7 @@ function showEnquiryModal(product, navigateFn) {
           </div>
           <div class="form-group">
             <label class="form-label" for="enq-phone">Phone Number *</label>
-            <input type="tel" id="enq-phone" class="form-input" placeholder="+91 98765 43210" required autocomplete="tel" />
+            <input type="tel" id="enq-phone" class="form-input" placeholder="XXXXXXXXXX" required autocomplete="tel" />
           </div>
           <div class="form-group">
             <label class="form-label" for="enq-email">Email Address</label>

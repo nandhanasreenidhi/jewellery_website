@@ -732,7 +732,7 @@ export function openEnquiryModal(product, navigateFn) {
             <span style="font-size:1.1rem;">💬</span> WhatsApp Specialist
           </a>
           <a href="tel:+919876543210" class="btn btn-outline btn-md w-full" style="color:var(--color-charcoal);border-color:var(--color-charcoal);display:flex;align-items:center;justify-content:center;gap:8px;">
-            <span>📞</span> Call +91 98765 43210
+            <span>📞</span> Call +91 XXXXXXXXXX
           </a>
         </div>
 
@@ -749,7 +749,7 @@ export function openEnquiryModal(product, navigateFn) {
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
             <div>
               <label class="form-label" for="card-enq-phone">Phone / WhatsApp *</label>
-              <input type="tel" id="card-enq-phone" class="form-input" placeholder="+91 98765 43210" required autocomplete="tel" />
+              <input type="tel" id="card-enq-phone" class="form-input" placeholder="+91 XXXXXXXXXX" required autocomplete="tel" />
             </div>
             <div>
               <label class="form-label" for="card-enq-city">City</label>

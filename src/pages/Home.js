@@ -1459,5 +1459,214 @@ export function getHomeStyles() {
   .promise-grid { grid-template-columns: 1fr; }
   .lookbook-grid { grid-template-columns: 1fr; }
 }
+<CodeBlock language="css" editable>
+/* ===== AARANYA HERO — LAPTOP VISIBILITY FIX ===== */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 155px 0 70px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 72% center;
+}
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(14, 11, 9, 0.94) 0%,
+      rgba(16, 12, 10, 0.84) 38%,
+      rgba(20, 16, 13, 0.46) 68%,
+      rgba(20, 16, 13, 0.18) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(14, 11, 9, 0.45) 0%,
+      transparent 25%,
+      rgba(14, 11, 9, 0.18) 65%,
+      rgba(14, 11, 9, 0.72) 100%
+    );
+}
+.hero__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 72px);
+  box-sizing: border-box;
+}
+.hero__text {
+  width: 100%;
+  max-width: 650px;
+}
+.hero__badge {
+  margin-bottom: 22px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.hero__title {
+  margin: 0 0 22px;
+  font-size: clamp(2.5rem, 4.2vw, 4rem);
+  line-height: 1.12;
+  overflow-wrap: break-word;
+}
+.hero__title-accent {
+  display: inline;
+  padding-right: 4px;
+}
+.hero__desc {
+  max-width: 540px;
+  margin: 0 0 30px;
+  font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+  line-height: 1.75;
+}
+.hero__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.hero__actions .btn {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.hero__stats {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 3vw, 36px);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.hero__stat {
+  min-width: 0;
+}
+.hero__stat-label {
+  line-height: 1.5;
+}
+/* Short laptop screens */
+@media (min-width: 769px) and (max-height: 800px) {
+  .hero {
+    min-height: 760px;
+    padding-top: 145px;
+    padding-bottom: 50px;
+  }
+.hero__content {
+    gap: 24px;
+  }
+.hero__badge {
+    margin-bottom: 16px;
+  }
+.hero__title {
+    font-size: clamp(2.35rem, 3.7vw, 3.4rem);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+.hero__desc {
+    margin-bottom: 22px;
+    line-height: 1.6;
+  }
+.hero__stats {
+    padding: 14px 20px;
+  }
+}
+/* Tablets */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100svh;
+    padding: 145px 0 45px;
+  }
+.hero__content {
+    gap: 28px;
+    padding-inline: 24px;
+  }
+.hero__text {
+    max-width: 600px;
+  }
+.hero__title {
+    font-size: clamp(2.2rem, 6vw, 3rem);
+  }
+.hero__stats {
+    width: 100%;
+    justify-content: space-around;
+    gap: 14px;
+  }
+}
+/* Mobile phones */
+@media (max-width: 540px) {
+  .hero {
+    min-height: 100svh;
+    padding: 135px 0 32px;
+  }
+.hero__content {
+    padding-inline: 18px;
+    gap: 24px;
+  }
+.hero__badge {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 6px 11px;
+  }
+.hero__title {
+    font-size: clamp(2rem, 8vw, 2.6rem);
+    line-height: 1.14;
+  }
+.hero__desc {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+.hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+.hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+.hero__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    padding: 14px 10px;
+  }
+.hero__stat-num {
+    font-size: 1.4rem;
+  }
+.hero__stat-label {
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+.hero__stat-divider {
+    display: none;
+  }
+}
+</CodeBlock>
+
 `;
 }

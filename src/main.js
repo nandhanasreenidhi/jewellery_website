@@ -1,3 +1,4 @@
+
 // =========================================================
 //  AARANYA — Luxury Indian Jewellery Experience
 //  Core SPA Orchestrator, Router & Layout Engine
@@ -12,13 +13,13 @@ import { renderHome, getHomeStyles } from './pages/Home.js';
 import { renderCollections, getCollectionsStyles } from './pages/Collections.js';
 import { renderProductDetail, getProductDetailStyles } from './pages/ProductDetail.js';
 import { renderCart, getCartStyles } from './pages/Cart.js';
-import { 
-  renderWishlist, 
-  renderAbout, 
-  renderContact, 
-  renderLookbook, 
+import {
+  renderWishlist,
+  renderAbout,
+  renderContact,
+  renderLookbook,
   renderConsultation,
-  getExtraPageStyles 
+  getExtraPageStyles
 } from './pages/OtherPages.js';
 import { store } from './data.js';
 import { initScrollReveal, initLazyImages } from './utils.js';
@@ -30,6 +31,7 @@ function injectPageStyles() {
 
   const styleEl = document.createElement('style');
   styleEl.id = 'aaranya-injected-styles';
+
   styleEl.textContent = `
     ${getHomeStyles()}
     ${getCollectionsStyles()}
@@ -38,7 +40,7 @@ function injectPageStyles() {
     ${getExtraPageStyles()}
     ${getFooterStyles()}
 
-    /* ── Site Masthead (Fixed Container) ───────────────────── */
+    /* ── Site Masthead ───────────────────────────────────── */
     .site-masthead {
       position: fixed;
       top: 0;
@@ -48,39 +50,49 @@ function injectPageStyles() {
       transition: all var(--transition-base);
     }
 
-    /* ── Announcement Bar ───────────────────────────────────── */
+    /* ── Announcement Marquee ────────────────────────────── */
     .announcement-bar {
       background: #14100e;
       color: rgba(250,247,242,0.9);
       border-bottom: 1px solid rgba(201,169,110,0.22);
       font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      padding: 7px var(--space-4);
+      letter-spacing: 0.08em;
+      padding: 9px 0;
+      overflow: hidden;
       position: relative;
-      transition: all var(--transition-base);
+      width: 100%;
     }
-    .announcement-inner {
+
+    .announcement-marquee {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .announcement-track {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: var(--container-2xl);
-      margin: 0 auto;
-      gap: var(--space-4);
+      width: max-content;
+      animation: aaranya-marquee 36s linear infinite;
+      will-change: transform;
     }
+
+    .announcement-track:hover {
+      animation-play-state: paused;
+    }
+
     .announcement-text {
       display: flex;
       align-items: center;
-      gap: var(--space-3);
-      overflow: hidden;
+      flex-shrink: 0;
+      gap: 28px;
+      padding-right: 28px;
       white-space: nowrap;
-      text-overflow: ellipsis;
     }
-    .announcement-links {
-      display: flex;
-      align-items: center;
-      gap: var(--space-5);
+
+    .announcement-text > span,
+    .announcement-text > a {
       flex-shrink: 0;
     }
+
     .announcement-link {
       color: var(--color-champagne);
       text-decoration: none;
@@ -89,15 +101,39 @@ function injectPageStyles() {
       align-items: center;
       gap: 4px;
     }
+
     .announcement-link:hover {
       color: var(--color-gold-light);
     }
-    @media (max-width: 768px) {
-      .announcement-links { display: none; }
-      .announcement-inner { justify-content: center; text-align: center; }
+
+    @keyframes aaranya-marquee {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
     }
 
-    /* ── Floating WhatsApp Concierge Widget ─────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .announcement-track {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .announcement-bar {
+        font-size: 0.68rem;
+        padding: 8px 0;
+      }
+
+      .announcement-text {
+        gap: 20px;
+        padding-right: 20px;
+      }
+    }
+
+    /* ── Floating Demo Concierge Widget ──────────────────── */
     .whatsapp-concierge-widget {
       position: fixed;
       bottom: 24px;
@@ -114,14 +150,25 @@ function injectPageStyles() {
       box-shadow: 0 8px 30px rgba(0,0,0,0.35);
       cursor: pointer;
       text-decoration: none;
-      transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-fast);
+      font: inherit;
+      transition:
+        transform var(--transition-base),
+        box-shadow var(--transition-base),
+        background var(--transition-fast);
     }
+
     .whatsapp-concierge-widget:hover {
       transform: translateY(-3px) scale(1.02);
       box-shadow: 0 12px 35px rgba(201,169,110,0.3);
       background: #244634;
       color: var(--color-ivory);
     }
+
+    .whatsapp-concierge-widget:focus-visible {
+      outline: 2px solid var(--color-gold);
+      outline-offset: 4px;
+    }
+
     .whatsapp-icon-circle {
       width: 28px;
       height: 28px;
@@ -134,33 +181,36 @@ function injectPageStyles() {
       font-size: 15px;
       flex-shrink: 0;
     }
+
     .whatsapp-label {
       font-size: 0.8rem;
       letter-spacing: 0.04em;
       font-weight: 500;
       white-space: nowrap;
     }
+
     .whatsapp-status-dot {
       width: 7px;
       height: 7px;
-      background: #4ade80;
+      background: #c9a96e;
       border-radius: var(--radius-full);
-      animation: pulse-dot 1.8s infinite;
+      flex-shrink: 0;
     }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
+
     @media (max-width: 600px) {
       .whatsapp-concierge-widget {
         bottom: 16px;
         right: 16px;
-        padding: 8px 14px;
+        padding: 9px 14px;
+        gap: 8px;
       }
-      .whatsapp-label { font-size: 0.75rem; }
+
+      .whatsapp-label {
+        font-size: 0.75rem;
+      }
     }
 
-    /* ── Back to Top Button ──────────────────────────────────── */
+    /* ── Back to Top Button ──────────────────────────────── */
     .back-to-top-btn {
       position: fixed;
       bottom: 24px;
@@ -181,16 +231,24 @@ function injectPageStyles() {
       transition: all var(--transition-base);
       box-shadow: var(--shadow-md);
     }
+
     .back-to-top-btn.visible {
       opacity: 0.9;
       visibility: visible;
     }
+
     .back-to-top-btn:hover {
       opacity: 1;
       transform: translateY(-3px);
       border-color: var(--color-gold);
     }
+
+    .back-to-top-btn:focus-visible {
+      outline: 2px solid var(--color-gold);
+      outline-offset: 4px;
+    }
   `;
+
   document.head.appendChild(styleEl);
 }
 
@@ -202,74 +260,123 @@ function initApp() {
   if (!appEl) return;
 
   appEl.innerHTML = `
-    <!-- Site Masthead (Unified Fixed Luxury Header) -->
+    <!-- Site Masthead -->
     <div id="site-masthead" class="site-masthead">
+
       <!-- Announcement Bar -->
       <aside class="announcement-bar" aria-label="Brand announcements">
-        <div class="announcement-inner">
-          <div class="announcement-text">
-            <span style="color:var(--color-gold);" aria-hidden="true">✦</span>
-            <span>Complimentary Insured Worldwide Delivery</span>
-            <span style="opacity:0.4;">|</span>
-            <span>100% BIS Hallmarked &amp; GIA Certified</span>
-            <span style="opacity:0.4;">|</span>
-            <span>Jaipur Atelier &amp; Private Showings</span>
-          </div>
-          <div class="announcement-links">
-            <a href="/consultation" class="announcement-link" data-link>
-              <span>Book Private Salon</span> →
-            </a>
-            <a href="tel:+919876543210" class="announcement-link" aria-label="Call concierge hotline">
-              <span>📞 +91 98765 43210</span>
-            </a>
+        <div class="announcement-marquee">
+          <div class="announcement-track">
+
+            <div class="announcement-text">
+              <span>✦ Complimentary Insured Worldwide Delivery</span>
+              <span>✦ 100% BIS Hallmarked &amp; GIA Certified</span>
+              <span>✦ Jaipur Atelier &amp; Private Showings</span>
+
+              <a href="/consultation" class="announcement-link" data-link>
+                Book Private Salon →
+              </a>
+
+              <span class="announcement-link" aria-label="Demo phone number">
+                📞 +91 XXXX XXXXXX
+              </span>
+            </div>
+
+            <!-- Duplicate track content for seamless scrolling -->
+            <div class="announcement-text" aria-hidden="true">
+              <span>✦ Complimentary Insured Worldwide Delivery</span>
+              <span>✦ 100% BIS Hallmarked &amp; GIA Certified</span>
+              <span>✦ Jaipur Atelier &amp; Private Showings</span>
+              <span>Book Private Salon →</span>
+              <span>📞 +91 XXXX XXXXXX</span>
+            </div>
+
           </div>
         </div>
       </aside>
 
       <!-- Site Header -->
-      <header id="site-header" class="site-header" role="banner"></header>
+      <header
+        id="site-header"
+        class="site-header"
+        role="banner"
+      ></header>
     </div>
 
-    <!-- Main Content Container for SPA Pages -->
+    <!-- Main Content -->
     <main id="main-content" role="main" tabindex="-1"></main>
 
     <!-- Site Footer -->
     <footer id="site-footer" role="contentinfo"></footer>
 
     <!-- Toast Notification Container -->
-    <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+    <div
+      id="toast-container"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
 
-    <!-- Floating WhatsApp Concierge -->
-    <a 
-      href="https://wa.me/919876543210?text=${encodeURIComponent('Hello AARANYA Concierge, I would like to enquire about your fine jewellery collections.')}" 
-      target="_blank" 
-      rel="noopener noreferrer" 
-      class="whatsapp-concierge-widget" 
-      aria-label="Chat with Jewellery Concierge on WhatsApp"
+    <!-- Floating Demo Concierge -->
+    <button
+      type="button"
+      class="whatsapp-concierge-widget"
+      aria-label="Demo jewellery concierge"
       id="whatsapp-float-btn"
     >
-      <div class="whatsapp-icon-circle" aria-hidden="true">💬</div>
+      <span class="whatsapp-icon-circle" aria-hidden="true">💬</span>
       <span class="whatsapp-label">Jewellery Concierge</span>
-      <span class="whatsapp-status-dot" aria-hidden="true" title="Online now"></span>
-    </a>
+      <span
+        class="whatsapp-status-dot"
+        aria-hidden="true"
+        title="Demo mode"
+      ></span>
+    </button>
 
-    <!-- Back to top button -->
-    <button class="back-to-top-btn" id="back-to-top-btn" aria-label="Scroll back to top">
-      <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2" aria-hidden="true">
+    <!-- Back to Top Button -->
+    <button
+      class="back-to-top-btn"
+      id="back-to-top-btn"
+      aria-label="Scroll back to top"
+      type="button"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        width="18"
+        height="18"
+        stroke="currentColor"
+        fill="none"
+        stroke-width="2"
+        aria-hidden="true"
+      >
         <polyline points="18 15 12 9 6 15"></polyline>
       </svg>
     </button>
   `;
 
+  // Floating concierge: demo-only interaction
+  const conciergeBtn = document.getElementById('whatsapp-float-btn');
+
+  conciergeBtn?.addEventListener('click', () => {
+    alert(
+      'Welcome to AARANYA! WhatsApp enquiries are disabled in this demo.'
+    );
+  });
+
   // Back to top behavior
   const bttBtn = document.getElementById('back-to-top-btn');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) {
-      bttBtn?.classList.add('visible');
-    } else {
-      bttBtn?.classList.remove('visible');
-    }
-  }, { passive: true });
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (window.scrollY > 400) {
+        bttBtn?.classList.add('visible');
+      } else {
+        bttBtn?.classList.remove('visible');
+      }
+    },
+    { passive: true }
+  );
+
   bttBtn?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
@@ -280,9 +387,14 @@ function initApp() {
 
   // Global link interception for SPA links
   document.addEventListener('click', (e) => {
-    const link = e.target.closest('a[data-link]');
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+
+    const link = target.closest('a[data-link]');
+
     if (link && link.href) {
       const url = new URL(link.href);
+
       if (url.origin === window.location.origin) {
         e.preventDefault();
         navigate(url.pathname + url.search);
@@ -306,21 +418,24 @@ export function navigate(urlStr, replace = false) {
   } else {
     history.pushState(null, '', urlStr);
   }
+
   handleRoute(urlStr);
 }
 
 function handleRoute(urlStr) {
   const url = new URL(urlStr, window.location.origin);
   const path = url.pathname.replace(/\/$/, '') || '/';
+
   const mainContainer = document.getElementById('main-content');
   if (!mainContainer) return;
 
-  // Clear container
+  // Clear previous page
   mainContainer.innerHTML = '';
   window.scrollTo({ top: 0, behavior: 'instant' });
 
   // Parse Query Parameters
   const params = {};
+
   url.searchParams.forEach((val, key) => {
     params[key] = val;
   });
@@ -329,58 +444,85 @@ function handleRoute(urlStr) {
   if (path === '/' || path === '') {
     document.title = 'AARANYA — Modern Indian Luxury Jewellery';
     renderHome(mainContainer, navigate);
+
   } else if (path === '/collections') {
     const catLabel = params.cat ? params.cat.toUpperCase() : 'ALL';
     document.title = `Collections [${catLabel}] — AARANYA Luxury Jewellery`;
     renderCollections(mainContainer, navigate, params);
+
   } else if (path.startsWith('/product/')) {
     const slug = path.replace('/product/', '').replace(/\/$/, '');
     document.title = 'Product Details — AARANYA Luxury Jewellery';
     renderProductDetail(mainContainer, navigate, slug);
+
   } else if (path === '/cart') {
     document.title = 'Shopping Bag — AARANYA Luxury Jewellery';
     renderCart(mainContainer, navigate);
+
   } else if (path === '/wishlist') {
     document.title = 'My Wishlist — AARANYA Luxury Jewellery';
     renderWishlist(mainContainer, navigate);
+
   } else if (path === '/about') {
     document.title = 'Our Heritage & Story — AARANYA Luxury Jewellery';
     renderAbout(mainContainer, navigate);
+
   } else if (path === '/contact') {
     document.title = 'Contact & Private Salon — AARANYA Luxury Jewellery';
     renderContact(mainContainer, navigate);
+
   } else if (path === '/lookbook') {
     document.title = 'Lookbook 2026 — AARANYA Luxury Jewellery';
     renderLookbook(mainContainer, navigate);
+
   } else if (path === '/consultation') {
     document.title = 'Book Private Consultation — AARANYA Luxury Jewellery';
     renderConsultation(mainContainer, navigate);
+
   } else {
     // 404 Page
     document.title = 'Page Not Found — AARANYA Luxury Jewellery';
+
     mainContainer.innerHTML = `
-      <div class="container section text-center" style="padding-top:calc(var(--space-24) + 60px);min-height:60vh;">
-        <span style="font-size:3rem;color:var(--color-gold);display:block;margin-bottom:var(--space-3);" aria-hidden="true">✦</span>
-        <h1 class="headline" style="margin-bottom:var(--space-4);">Piece Not Found</h1>
-        <p class="body text-stone" style="max-width:480px;margin:0 auto var(--space-8);">
-          The page or jewellery curation you are searching for is unavailable or has moved to our private vault.
+      <div
+        class="container section text-center"
+        style="padding-top:calc(var(--space-24) + 60px);min-height:60vh;"
+      >
+        <span
+          style="font-size:3rem;color:var(--color-gold);display:block;margin-bottom:var(--space-3);"
+          aria-hidden="true"
+        >✦</span>
+
+        <h1 class="headline" style="margin-bottom:var(--space-4);">
+          Piece Not Found
+        </h1>
+
+        <p
+          class="body text-stone"
+          style="max-width:480px;margin:0 auto var(--space-8);"
+        >
+          The page or jewellery curation you are searching for is unavailable
+          or has moved to our private vault.
         </p>
-        <a href="/collections" class="btn btn-primary btn-lg" data-link>Browse All Collections</a>
+
+        <a href="/collections" class="btn btn-primary btn-lg" data-link>
+          Browse All Collections
+        </a>
       </div>
     `;
   }
 
-  // Update navigation active states
+  // Update active navigation states
   updateActiveLink(path);
 
-  // Trigger animations & image lazy loaders
+  // Trigger animations and lazy loaders
   setTimeout(() => {
     initScrollReveal();
     initLazyImages();
   }, 40);
 }
 
-// Start application when DOM is ready
+// ── Start Application When DOM Is Ready ────────────────────
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initApp);
 } else {

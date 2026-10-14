@@ -238,10 +238,10 @@ export function renderContact(container, navigateFn) {
 
           <div style="display:flex;flex-direction:column;gap:var(--space-6);">
             ${[
-      { icon: '📞', label: 'Phone', value: '+91 98765 43210', sub: 'Mon–Sat, 10am–7pm IST' },
+      { icon: '📞', label: 'Phone', value: '+91 XXXXXXXXXX', sub: 'Mon–Sat, 10am–7pm IST' },
       { icon: '✉', label: 'Email', value: 'hello@aaranya.in', sub: 'Response within 24 hours' },
       { icon: '📍', label: 'Studio', value: 'Johri Bazaar, Jaipur, Rajasthan 302003', sub: 'By appointment only' },
-      { icon: '💬', label: 'WhatsApp', value: '+91 98765 43210', sub: 'Quick queries and photos welcome' },
+      { icon: '💬', label: 'WhatsApp', value: 'XXXXXXXXXX', sub: 'Quick queries and photos welcome' },
     ].map(c => `
               <div style="display:flex;gap:var(--space-4);align-items:flex-start;">
                 <div style="width:44px;height:44px;background:var(--color-cream);border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">${c.icon}</div>
@@ -285,7 +285,7 @@ export function renderContact(container, navigateFn) {
             </div>
             <div class="form-group">
               <label class="form-label" for="contact-phone">Phone Number</label>
-              <input type="tel" id="contact-phone" class="form-input" autocomplete="tel" placeholder="+91 98765 43210" />
+              <input type="tel" id="contact-phone" class="form-input" autocomplete="tel" placeholder="XXXXXXXXXX" />
             </div>
             <div class="form-group">
               <label class="form-label" for="contact-subject">Subject</label>
@@ -620,34 +620,422 @@ export function renderLookbook(container, navigateFn) {
 }
 
 
+
 // =========================================================
 //  AARANYA — Consultation Page
 // =========================================================
 
 export function renderConsultation(container, navigateFn) {
   container.innerHTML = `
-    <div style="padding-top:calc(var(--space-16) + 60px);padding-bottom:var(--space-20);">
-      <div class="container" style="max-width:960px;">
-        
-        <!-- Header -->
-        <div class="text-center" style="margin-bottom:var(--space-12);">
-          <p class="subtitle text-gold">Atelier Experience</p>
-          <h1 class="headline" style="margin:var(--space-3) 0 var(--space-4);">Book a Private Jewellery Consultation</h1>
-          <p class="body-lg text-stone" style="max-width:640px;margin:0 auto;">
-            Experience undivided attention from our senior jewellery specialists. Explore curated trays of 
-            BIS-hallmarked gold, GIA diamonds, and rare gemstones tailored to your personal aesthetic.
-          </p>
-        </div>
+    <style>
+      /* Consultation page */
+      .consultation-page {
+        padding-top: calc(var(--space-16) + 60px);
+        padding-bottom: var(--space-20);
+        overflow-x: clip;
+      }
 
-        <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:var(--space-12);align-items:start;" class="consultation-grid">
-          
+      .consultation-inner {
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
+      }
+
+      .consultation-intro {
+        text-align: center;
+        margin-bottom: var(--space-12);
+      }
+
+      .consultation-intro .consultation-description {
+        max-width: 640px;
+        margin: 0 auto;
+      }
+
+      .consultation-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+        gap: 32px;
+        align-items: start;
+      }
+
+      .consultation-form-card {
+        min-width: 0;
+        padding: 32px;
+        background: var(--color-white);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-md);
+        border: 1px solid rgba(201, 169, 110, 0.2);
+      }
+
+      .consultation-form-card h2 {
+        margin-bottom: 24px;
+        font-size: 1.35rem;
+        line-height: 1.4;
+      }
+
+      #consultation-form {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        width: 100%;
+        min-width: 0;
+      }
+
+      #consultation-form .form-group {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+      }
+
+      #consultation-form .form-label {
+        display: block;
+        margin-bottom: 8px;
+        line-height: 1.5;
+      }
+
+      #consultation-form .form-input,
+      #consultation-form .form-select {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+
+      #consultation-form .form-input {
+        min-height: 48px;
+      }
+
+      #consultation-form textarea.form-input {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .consultation-fields-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      #consult-submit {
+        width: 100%;
+        min-height: 52px;
+        white-space: normal;
+        line-height: 1.5;
+        margin-top: 4px;
+      }
+
+      .consultation-form-note {
+        font-size: 0.75rem;
+        color: var(--color-stone);
+        text-align: center;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      .consultation-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        min-width: 0;
+      }
+
+      .consultation-privileges {
+        background: var(--color-ivory-warm);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        border: 1px solid rgba(201, 169, 110, 0.3);
+      }
+
+      .consultation-privileges h3 {
+        font-family: var(--font-serif);
+        font-size: 1.3rem;
+        line-height: 1.4;
+        margin-bottom: 16px;
+        color: var(--color-charcoal);
+      }
+
+      .consultation-privileges ul {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .consultation-privileges li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: var(--text-sm);
+        line-height: 1.65;
+        color: var(--color-charcoal-mid);
+      }
+
+      .consultation-symbol {
+        flex-shrink: 0;
+        color: var(--color-gold);
+        font-size: 1.1rem;
+      }
+
+      .consultation-whatsapp {
+        background: var(--color-charcoal);
+        border-radius: var(--radius-lg);
+        padding: 26px 24px;
+        color: var(--color-ivory);
+        text-align: center;
+      }
+
+      .consultation-whatsapp-icon {
+        display: block;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+      }
+
+      .consultation-whatsapp h4 {
+        font-family: var(--font-serif);
+        font-size: 1.25rem;
+        line-height: 1.45;
+        color: var(--color-champagne);
+        margin-bottom: 12px;
+      }
+
+      .consultation-whatsapp p {
+        font-size: var(--text-xs);
+        color: rgba(250, 247, 242, 0.75);
+        line-height: 1.7;
+        margin-bottom: 18px;
+      }
+
+      .consultation-whatsapp .btn {
+        width: 100%;
+        box-sizing: border-box;
+        white-space: normal;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .consultation-hotline {
+        text-align: center;
+        padding: 4px 0 8px;
+      }
+
+      .consultation-hotline-label {
+        font-size: var(--text-xs);
+        color: var(--color-stone);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 6px;
+      }
+
+      .consultation-hotline a {
+        font-family: var(--font-serif);
+        font-size: 1.2rem;
+        color: var(--color-charcoal);
+        text-decoration: none;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+      }
+
+      /* Tablet */
+      @media (max-width: 900px) {
+        .consultation-page {
+          padding-top: 125px;
+          padding-bottom: 56px;
+        }
+
+        .consultation-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 24px;
+        }
+
+        .consultation-sidebar {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          align-items: start;
+          gap: 18px;
+        }
+
+        .consultation-hotline {
+          grid-column: 1 / -1;
+        }
+      }
+
+      /* Mobile */
+      @media (max-width: 600px) {
+        .consultation-page {
+          padding-top: 108px;
+          padding-bottom: 40px;
+        }
+
+        .consultation-inner {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .consultation-intro {
+          margin-bottom: 28px;
+        }
+
+        .consultation-intro .subtitle {
+          margin-bottom: 10px;
+        }
+
+        .consultation-intro h1 {
+          font-size: clamp(1.8rem, 7vw, 2.3rem);
+          line-height: 1.2;
+          margin: 10px 0 14px !important;
+        }
+
+        .consultation-intro .consultation-description {
+          font-size: 0.95rem;
+          line-height: 1.75;
+          padding: 0 2px;
+        }
+
+        .consultation-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 20px;
+        }
+
+        .consultation-form-card {
+          padding: 20px 16px;
+          border-radius: 16px;
+        }
+
+        .consultation-form-card h2 {
+          font-size: 1.22rem;
+          margin-bottom: 20px;
+        }
+
+        #consultation-form {
+          gap: 17px;
+        }
+
+        .consultation-fields-row {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 17px;
+        }
+
+        #consultation-form .form-label {
+          font-size: 0.9rem;
+          margin-bottom: 7px;
+        }
+
+        #consultation-form .form-input,
+        #consultation-form .form-select {
+          min-height: 48px;
+          padding: 12px;
+          border-radius: 9px;
+        }
+
+        #consultation-form textarea.form-input {
+          min-height: 110px;
+        }
+
+        #consult-submit {
+          font-size: 0.9rem;
+          padding: 14px 12px;
+        }
+
+        .consultation-form-note {
+          font-size: 0.72rem;
+        }
+
+        .consultation-sidebar {
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+
+        .consultation-privileges,
+        .consultation-whatsapp {
+          padding: 21px 18px;
+          border-radius: 14px;
+        }
+
+        .consultation-privileges h3 {
+          font-size: 1.25rem;
+        }
+
+        .consultation-privileges li {
+          font-size: 0.88rem;
+          line-height: 1.7;
+        }
+
+        .consultation-whatsapp h4 {
+          font-size: 1.2rem;
+        }
+
+        .consultation-whatsapp p {
+          font-size: 0.82rem;
+          line-height: 1.7;
+        }
+
+        .consultation-hotline {
+          padding: 4px 0 8px;
+        }
+
+        .consultation-hotline a {
+          font-size: 1.15rem;
+        }
+      }
+
+      /* Extra-small phones */
+      @media (max-width: 360px) {
+        .consultation-inner {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+
+        .consultation-form-card {
+          padding: 17px 13px;
+        }
+
+        .consultation-privileges,
+        .consultation-whatsapp {
+          padding: 18px 15px;
+        }
+      }
+    </style>
+
+    <main class="consultation-page">
+      <div class="consultation-inner">
+
+        <!-- Header -->
+        <header class="consultation-intro">
+          // <p class="subtitle text-gold"> </p>
+
+          <h1 class="headline" style="margin:var(--space-3) 0 var(--space-4);">
+            Book a Private Jewellery Consultation
+          </h1>
+
+          <p class="body-lg text-stone consultation-description">
+            Experience undivided attention from our senior jewellery specialists.
+            Explore curated trays of BIS-hallmarked gold, GIA diamonds, and rare
+            gemstones tailored to your personal aesthetic.
+          </p>
+        </header>
+
+        <div class="consultation-grid">
+
           <!-- Booking Form -->
-          <div style="background:var(--color-white);border-radius:var(--radius-xl);padding:var(--space-8);box-shadow:var(--shadow-md);border:1px solid rgba(201,169,110,0.15);">
-            <h2 class="title" style="margin-bottom:var(--space-6);font-size:1.35rem;">Reserve Your Appointment</h2>
-            <form id="consultation-form" style="display:flex;flex-direction:column;gap:var(--space-4);">
-              
+          <section class="consultation-form-card">
+            <h2 class="title">Reserve Your Appointment</h2>
+
+            <form id="consultation-form">
+
               <div class="form-group">
-                <label class="form-label" for="consult-format">Consultation Format *</label>
+                <label class="form-label" for="consult-format">
+                  Consultation Format *
+                </label>
+
                 <select id="consult-format" class="form-select" required>
                   <option value="jaipur">In-Person Private Salon — Johri Bazaar, Jaipur</option>
                   <option value="delhi">Private Showing Suite — New Delhi</option>
@@ -657,24 +1045,40 @@ export function renderConsultation(container, navigateFn) {
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="consult-interest">Collection of Primary Interest *</label>
+                <label class="form-label" for="consult-interest">
+                  Collection of Primary Interest *
+                </label>
+
                 <select id="consult-interest" class="form-select" required>
-                  <option value="bridal">Royal Bridal Trousseau (Polki, Kundan & Jadau)</option>
+                  <option value="bridal">Royal Bridal Trousseau (Polki, Kundan &amp; Jadau)</option>
                   <option value="bespoke">Bespoke Heirloom Commission / High Jewellery</option>
-                  <option value="diamonds">Solitaires & Platinum Engagement</option>
+                  <option value="diamonds">Solitaires &amp; Platinum Engagement</option>
                   <option value="mens">Men's Regal Jewellery Collection</option>
                   <option value="gemstones">Natural Gemstones (Sapphire, Ruby, Emerald)</option>
-                  <option value="everyday">Everyday Fine Jewellery & Gifting</option>
+                  <option value="everyday">Everyday Fine Jewellery &amp; Gifting</option>
                 </select>
               </div>
 
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+              <div class="consultation-fields-row">
                 <div class="form-group">
-                  <label class="form-label" for="consult-date">Preferred Date *</label>
-                  <input type="date" id="consult-date" class="form-input" required min="2026-10-13" />
+                  <label class="form-label" for="consult-date">
+                    Preferred Date *
+                  </label>
+
+                  <input
+                    type="date"
+                    id="consult-date"
+                    class="form-input"
+                    required
+                    min="${new Date().toLocaleDateString('en-CA')}"
+                  />
                 </div>
+
                 <div class="form-group">
-                  <label class="form-label" for="consult-time">Preferred Time Slot *</label>
+                  <label class="form-label" for="consult-time">
+                    Preferred Time Slot *
+                  </label>
+
                   <select id="consult-time" class="form-select" required>
                     <option value="morning">11:00 AM – 12:30 PM (Morning)</option>
                     <option value="afternoon">02:30 PM – 04:00 PM (Afternoon)</option>
@@ -683,89 +1087,158 @@ export function renderConsultation(container, navigateFn) {
                 </div>
               </div>
 
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+              <div class="consultation-fields-row">
                 <div class="form-group">
-                  <label class="form-label" for="consult-name">Full Name *</label>
-                  <input type="text" id="consult-name" class="form-input" placeholder="Ananya Sharma" required autocomplete="name" />
+                  <label class="form-label" for="consult-name">
+                    Full Name *
+                  </label>
+
+                  <input
+                    type="text"
+                    id="consult-name"
+                    class="form-input"
+                    placeholder="Ananya Sharma"
+                    required
+                    autocomplete="name"
+                  />
                 </div>
+
                 <div class="form-group">
-                  <label class="form-label" for="consult-phone">WhatsApp / Phone *</label>
-                  <input type="tel" id="consult-phone" class="form-input" placeholder="+91 98765 43210" required autocomplete="tel" />
+                  <label class="form-label" for="consult-phone">
+                    WhatsApp / Phone *
+                  </label>
+
+                  <input
+                    type="tel"
+                    id="consult-phone"
+                    class="form-input"
+                    placeholder="XXXXXXXXXX"
+                    required
+                    autocomplete="tel"
+                  />
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="consult-email">Email Address *</label>
-                <input type="email" id="consult-email" class="form-input" placeholder="ananya@example.com" required autocomplete="email" />
+                <label class="form-label" for="consult-email">
+                  Email Address *
+                </label>
+
+                <input
+                  type="email"
+                  id="consult-email"
+                  class="form-input"
+                  placeholder="ananya@example.com"
+                  required
+                  autocomplete="email"
+                />
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="consult-notes">Special Preferences / Custom Requests</label>
-                <textarea id="consult-notes" class="form-input" rows="3" placeholder="Tell us if you have specific designs in mind, wedding dates, or heirloom stones you wish to reset…"></textarea>
+                <label class="form-label" for="consult-notes">
+                  Special Preferences / Custom Requests
+                </label>
+
+                <textarea
+                  id="consult-notes"
+                  class="form-input"
+                  rows="4"
+                  placeholder="Tell us if you have specific designs in mind, wedding dates, or heirloom stones you wish to reset…"
+                ></textarea>
               </div>
 
-              <button type="submit" class="btn btn-primary btn-lg w-full" id="consult-submit" style="margin-top:var(--space-2);">
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg w-full"
+                id="consult-submit"
+              >
                 Confirm Consultation Request
               </button>
 
-              <p style="font-size:0.75rem;color:var(--color-stone);text-align:center;line-height:1.5;">
-                Appointment recorded locally for demo. Our concierge will contact you via WhatsApp/call to confirm the salon booking.
+              <p class="consultation-form-note">
+                Appointment recorded locally for demo. Our concierge will contact
+                you via WhatsApp/call to confirm the salon booking.
               </p>
-            </form>
-          </div>
 
-          <!-- Salon Privileges & Direct WhatsApp -->
-          <div style="display:flex;flex-direction:column;gap:var(--space-6);">
-            
-            <div style="background:var(--color-ivory-warm);border-radius:var(--radius-lg);padding:var(--space-6);border:1px solid rgba(201,169,110,0.25);">
-              <h3 style="font-family:var(--font-serif);font-size:1.3rem;margin-bottom:var(--space-3);color:var(--color-charcoal);">What to Expect</h3>
-              <ul style="display:flex;flex-direction:column;gap:var(--space-3);list-style:none;padding:0;">
-                <li style="display:flex;gap:var(--space-3);font-size:var(--text-sm);color:var(--color-charcoal-mid);">
-                  <span class="text-gold" style="font-size:1.1rem;">✦</span>
-                  <span><strong>Dedicated Specialist:</strong> 90 minutes of dedicated curation without time pressure.</span>
+            </form>
+          </section>
+
+          <!-- Sidebar -->
+          <aside class="consultation-sidebar">
+
+            <!-- Salon Privileges -->
+            <section class="consultation-privileges">
+              <h3>What to Expect</h3>
+
+              <ul>
+                <li>
+                  <span class="consultation-symbol">✦</span>
+                  <span>
+                    <strong>Dedicated Specialist:</strong>
+                    90 minutes of dedicated curation without time pressure.
+                  </span>
                 </li>
-                <li style="display:flex;gap:var(--space-3);font-size:var(--text-sm);color:var(--color-charcoal-mid);">
-                  <span class="text-gold" style="font-size:1.1rem;">◈</span>
-                  <span><strong>Touch &amp; Try:</strong> Experience the weight, purity, and drape of authentic heirloom pieces.</span>
+
+                <li>
+                  <span class="consultation-symbol">◈</span>
+                  <span>
+                    <strong>Touch &amp; Try:</strong>
+                    Experience the weight, purity, and drape of authentic heirloom pieces.
+                  </span>
                 </li>
-                <li style="display:flex;gap:var(--space-3);font-size:var(--text-sm);color:var(--color-charcoal-mid);">
-                  <span class="text-gold" style="font-size:1.1rem;">◇</span>
-                  <span><strong>Bespoke Sketching:</strong> Work directly with our design atelier for custom modifications.</span>
+
+                <li>
+                  <span class="consultation-symbol">◇</span>
+                  <span>
+                    <strong>Bespoke Sketching:</strong>
+                    Work directly with our design atelier for custom modifications.
+                  </span>
                 </li>
               </ul>
-            </div>
+            </section>
 
-            <!-- Direct WhatsApp Quick Connect -->
-            <div style="background:var(--color-charcoal);border-radius:var(--radius-lg);padding:var(--space-6);color:var(--color-ivory);text-align:center;">
-              <span style="font-size:1.8rem;display:block;margin-bottom:var(--space-2);">💬</span>
-              <h4 style="font-family:var(--font-serif);font-size:1.25rem;color:var(--color-champagne);margin-bottom:var(--space-2);">Need an Immediate Appointment?</h4>
-              <p style="font-size:var(--text-xs);color:rgba(250,247,242,0.7);margin-bottom:var(--space-4);line-height:1.6;">
-                Our concierge team is available on WhatsApp Mon–Sat, 10am–7pm IST for instant scheduling and catalogue sharing.
+            <!-- WhatsApp -->
+            <section class="consultation-whatsapp">
+              <span class="consultation-whatsapp-icon">💬</span>
+
+              <h4>Need an Immediate Appointment?</h4>
+
+              <p>
+                Our concierge team is available on WhatsApp Mon–Sat, 10am–7pm IST
+                for instant scheduling and catalogue sharing.
               </p>
-              <a 
-                href="https://wa.me/919876543210?text=${encodeURIComponent('Hello AARANYA Concierge, I would like to schedule a private jewellery consultation appointment.')}" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="btn btn-outline btn-md w-full"
+
+              <a
+                href="https://wa.me/919876543210?text=${encodeURIComponent('Hello AARANYA Concierge, I would like to schedule a private jewellery consultation appointment.')}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline btn-md"
                 style="color:var(--color-gold);border-color:var(--color-gold);"
               >
                 Chat on WhatsApp Now
               </a>
-            </div>
+            </section>
 
             <!-- Hotline -->
-            <div style="text-align:center;">
-              <p style="font-size:var(--text-xs);color:var(--color-stone);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">Direct Atelier Line</p>
-              <a href="tel:+919876543210" style="font-family:var(--font-serif);font-size:1.2rem;color:var(--color-charcoal);text-decoration:none;font-weight:600;">+91 98765 43210</a>
+            <div class="consultation-hotline">
+              <p class="consultation-hotline-label">Direct Atelier Line</p>
+
+              <a href="tel:+919876543210">
+                +91 XXXXXXXXXX 
+              </a>
             </div>
 
-          </div>
-
+          </aside>
         </div>
-
       </div>
-    </div>
+    </main>
   `;
+
+  // Keep the existing consultation form submission handler here if your
+  // current file has one. The responsive layout does not submit bookings
+  // to a server by itself.
+
+
 
   // Consultation form handler
   container.querySelector('#consultation-form')?.addEventListener('submit', e => {

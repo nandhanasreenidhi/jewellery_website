@@ -330,7 +330,7 @@ function renderMobileMenu(navigateFn) {
 
     <div style="margin-top:var(--space-8);padding-top:var(--space-6);border-top:1px solid rgba(201,169,110,0.15);">
       <p style="font-size:var(--text-xs);color:var(--color-stone-light);letter-spacing:0.1em;margin-bottom:var(--space-3);">CONTACT US</p>
-      <p style="font-size:var(--text-sm);color:rgba(250,247,242,0.6);">+91 98765 43210</p>
+      <p style="font-size:var(--text-sm);color:rgba(250,247,242,0.6);">XXXXXXXXXX</p>
       <p style="font-size:var(--text-sm);color:rgba(250,247,242,0.6);">hello@aaranya.in</p>
     </div>
   `;

@@ -94,7 +94,7 @@ export function renderFooter(navigateFn) {
                 Rajasthan 302 003, India
               </p>
               <p style="margin-top:var(--space-4);">
-                <a href="tel:+919876543210">+91 98765 43210</a><br/>
+                <a href="tel:+919876543210">+91 XXXXXXXXXX</a><br/>
                 <a href="mailto:hello@aaranya.in">hello@aaranya.in</a>
               </p>
               <p style="margin-top:var(--space-3);font-size:var(--text-xs);color:rgba(250,247,242,0.4);font-style:normal;">
