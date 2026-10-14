@@ -50,88 +50,6 @@ function injectPageStyles() {
       transition: all var(--transition-base);
     }
 
-    /* ── Announcement Marquee ────────────────────────────── */
-    .announcement-bar {
-      background: #14100e;
-      color: rgba(250,247,242,0.9);
-      border-bottom: 1px solid rgba(201,169,110,0.22);
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      padding: 9px 0;
-      overflow: hidden;
-      position: relative;
-      width: 100%;
-    }
-
-    .announcement-marquee {
-      width: 100%;
-      overflow: hidden;
-    }
-
-    .announcement-track {
-      display: flex;
-      width: max-content;
-      animation: aaranya-marquee 36s linear infinite;
-      will-change: transform;
-    }
-
-    .announcement-track:hover {
-      animation-play-state: paused;
-    }
-
-    .announcement-text {
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-      gap: 28px;
-      padding-right: 28px;
-      white-space: nowrap;
-    }
-
-    .announcement-text > span,
-    .announcement-text > a {
-      flex-shrink: 0;
-    }
-
-    .announcement-link {
-      color: var(--color-champagne);
-      text-decoration: none;
-      transition: color var(--transition-fast);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .announcement-link:hover {
-      color: var(--color-gold-light);
-    }
-
-    @keyframes aaranya-marquee {
-      from {
-        transform: translateX(0);
-      }
-      to {
-        transform: translateX(-50%);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .announcement-track {
-        animation: none;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .announcement-bar {
-        font-size: 0.68rem;
-        padding: 8px 0;
-      }
-
-      .announcement-text {
-        gap: 20px;
-        padding-right: 20px;
-      }
-    }
 
     /* ── Floating Demo Concierge Widget ──────────────────── */
     .whatsapp-concierge-widget {
@@ -263,37 +181,7 @@ function initApp() {
     <!-- Site Masthead -->
     <div id="site-masthead" class="site-masthead">
 
-      <!-- Announcement Bar -->
-      <aside class="announcement-bar" aria-label="Brand announcements">
-        <div class="announcement-marquee">
-          <div class="announcement-track">
-
-            <div class="announcement-text">
-              <span>✦ Complimentary Insured Worldwide Delivery</span>
-              <span>✦ 100% BIS Hallmarked &amp; GIA Certified</span>
-              <span>✦ Jaipur Atelier &amp; Private Showings</span>
-
-              <a href="/consultation" class="announcement-link" data-link>
-                Book Private Salon →
-              </a>
-
-              <span class="announcement-link" aria-label="Demo phone number">
-                📞 +91 XXXX XXXXXX
-              </span>
-            </div>
-
-            <!-- Duplicate track content for seamless scrolling -->
-            <div class="announcement-text" aria-hidden="true">
-              <span>✦ Complimentary Insured Worldwide Delivery</span>
-              <span>✦ 100% BIS Hallmarked &amp; GIA Certified</span>
-              <span>✦ Jaipur Atelier &amp; Private Showings</span>
-              <span>Book Private Salon →</span>
-              <span>📞 +91 XXXX XXXXXX</span>
-            </div>
-
-          </div>
-        </div>
-      </aside>
+     
 
       <!-- Site Header -->
       <header
